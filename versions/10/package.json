@@ -1,6 +1,6 @@
 {
   "name": "@tsonic/express",
-  "version": "10.0.1",
+  "version": "10.0.11",
   "description": "TypeScript type definitions for Express.js style API on ASP.NET Core",
   "type": "module",
   "keywords": [
@@ -19,7 +19,7 @@
     "url": "https://github.com/tsoniclang/express.git"
   },
   "peerDependencies": {
-    "@tsonic/dotnet": "^10.0.1",
-    "@tsonic/core": "^10.0.1"
+    "@tsonic/dotnet": "10.0.11",
+    "@tsonic/core": "10.0.11"
   }
 }
