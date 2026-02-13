@@ -1,59 +1,134 @@
 # @tsonic/express
 
-`@tsonic/express` is the generated TypeScript package for the `express-clr` runtime.
+Express-style HTTP server APIs for **Tsonic** (TypeScript → .NET).
 
-## Documentation Ownership
+Use this package to write Express-like apps in TypeScript and compile them to native binaries with `tsonic`.
 
-Use this split:
+## Quick Start (new project)
 
-- Runtime behavior, parity decisions, and architecture: `express-clr`
-- Package consumption, generation, and publishing workflow: `express` (this repo)
+```bash
+mkdir my-api && cd my-api
+tsonic init
+
+# Install ASP.NET Core bindings (required)
+tsonic add framework Microsoft.AspNetCore.App @tsonic/aspnetcore
+
+# Install Express runtime + bindings
+tsonic add nuget express <version> @tsonic/express
+
+npm install
+npm run dev
+```
+
+Then open `http://localhost:3000/`.
+
+## Hello World
+
+```ts
+// packages/my-api/src/App.ts
+import { express } from "@tsonic/express/index.js";
+
+export function main(): void {
+  const app = express.create();
+
+  app.get("/", (_req, res) => {
+    res.send("hello");
+  });
+
+  app.listen(3000);
+}
+```
+
+## Basic API Surface
+
+### Create an app / router
+
+```ts
+import { express } from "@tsonic/express/index.js";
+
+const app = express.create();
+const router = express.Router();
+```
+
+### Routing
+
+Common verbs:
+
+```ts
+app.get("/health", (_req, res) => res.send("ok"));
+app.post("/items", (req, res) => res.json(req.body));
+app.put("/items/:id", (req, res) => res.send(req.params["id"]));
+app.delete("/items/:id", (_req, res) => res.sendStatus(204));
+app.patch("/items/:id", (_req, res) => res.sendStatus(204));
+app.all("/anything", (_req, res) => res.send("matched"));
+```
+
+### Middleware
+
+```ts
+app.use((req, _res, next) => {
+  // Do something with req
+  next();
+});
+```
+
+Error middleware:
+
+```ts
+app.use((err, _req, res, _next) => {
+  res.status(500).json({ error: String(err) });
+});
+```
+
+### Request / Response
+
+`Request` highlights:
+
+- `req.method`, `req.path`, `req.originalUrl`
+- `req.query`, `req.params`
+- `req.body` (when using body parsers)
+- `req.get(name)` / `req.header(name)`
+
+`Response` highlights:
+
+- `res.status(code)`
+- `res.send(body)`, `res.json(body)`, `res.sendStatus(code)`
+- `res.redirect(path)` / `res.redirect(status, path)`
+- `res.set(name, value)` / `res.header(name, value)`
+- `res.cookie(name, value, options)` / `res.clearCookie(name, options)`
+
+### Body parsing
+
+```ts
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(express.text());
+app.use(express.raw());
+```
+
+### Static files
+
+```ts
+app.use(express.static("./public"));
+```
+
+### Listen / close
+
+```ts
+const server = app.listen(3000);
+server.close();
+```
+
+## Advanced docs
+
+- https://github.com/tsoniclang/express/blob/main/docs/advanced.md (routers, handlers, middleware patterns)
+- https://github.com/tsoniclang/express/blob/main/docs/deviations.md (known compatibility gaps / parity notes)
 
 ## Versioning Model
 
 This repo is versioned by .NET major:
 
 - .NET 10 -> `versions/10/` -> npm `@tsonic/express@10.x`
-
-## Install
-
-```bash
-npm install @tsonic/express @tsonic/dotnet @tsonic/core
-```
-
-## Usage
-
-```ts
-import { express } from "@tsonic/express/index.js";
-
-const app = express.create();
-
-app.get("/", (req, res) => {
-  res.send("hello");
-});
-
-app.listen(3000);
-```
-
-## Generate Types
-
-```bash
-npm run generate:10
-```
-
-The generator reads `express-clr` build outputs and regenerates `versions/10/`.
-
-## Publish
-
-```bash
-npm run publish:10
-```
-
-## Documentation Map
-
-- Generation workflow: `docs/generation.md`
-- Release workflow: `docs/release.md`
-- Current compatibility notes: `docs/deviations.md`
 
 ## License
 
