@@ -21,6 +21,27 @@ This repo is versioned by .NET major:
 npm install @tsonic/express @tsonic/dotnet @tsonic/core
 ```
 
+## Use with Tsonic (runtime + types)
+
+`@tsonic/express` provides the **TypeScript bindings**. You also need the **.NET runtime assembly** that implements the Express-style API.
+
+### Option A: Add a local DLL (recommended while developing)
+
+Build `express-clr` and add the DLL + this bindings package:
+
+```bash
+dotnet build ../express-clr/src/express/express.csproj -c Release
+tsonic add package ../express-clr/artifacts/bin/express/Release/net10.0/express.dll @tsonic/express
+```
+
+### Option B: Add via NuGet (when available)
+
+If you have a NuGet package for the runtime, you can wire it up the same way:
+
+```bash
+tsonic add nuget express <version> @tsonic/express
+```
+
 ## Usage
 
 ```ts
