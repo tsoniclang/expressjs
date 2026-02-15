@@ -1,6 +1,8 @@
 # @tsonic/express
 
-Express-style HTTP server APIs for **Tsonic** (TypeScript → .NET).
+Express-style HTTP server APIs for **Tsonic**.
+
+This package is part of Tsonic: https://tsonic.org.
 
 Use this package to write Express-like apps in TypeScript and compile them to native binaries with `tsonic`.
 
@@ -10,7 +12,7 @@ Use this package to write Express-like apps in TypeScript and compile them to na
 mkdir my-api && cd my-api
 tsonic init
 
-# Install Express runtime + bindings (and required ASP.NET Core deps)
+# Install Express runtime + bindings
 tsonic add npm @tsonic/express
 npm run dev
 ```
@@ -121,9 +123,9 @@ server.close();
 
 ## Versioning Model
 
-This repo is versioned by .NET major:
+This repo is versioned by runtime major:
 
-- .NET 10 -> `versions/10/` -> npm `@tsonic/express@10.x`
+- `10` -> `versions/10/` -> npm `@tsonic/express@10.x`
 
 ## License
 
