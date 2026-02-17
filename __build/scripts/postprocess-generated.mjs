@@ -3,6 +3,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ORDER = [
+  "Router",
   "RouteHandler",
   "RouteHandlerReturn",
   "RouteHandlerSync",
