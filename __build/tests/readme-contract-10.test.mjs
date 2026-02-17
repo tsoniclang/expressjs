@@ -106,7 +106,7 @@ test("express README contract (net10)", async () => {
     const runtimeApp = `import { express } from "@tsonic/express/index.js";
 
 export function main(): void {
-  const app = express.create();
+  ${readSnippet("docs/snippets/10/create-app-router.ts")}
 
   ${readSnippet("docs/snippets/10/body-parsing.ts")}
 
@@ -175,6 +175,12 @@ export function _readme_snippets_compile_only(): void {
         const r = await httpRequest("GET", `http://127.0.0.1:${port}/hello.txt`);
         assert.equal(r.status, 200);
         assert.equal(r.body, "hello");
+      }
+
+      {
+        const r = await httpRequest("GET", `http://127.0.0.1:${port}/api/ping`);
+        assert.equal(r.status, 200);
+        assert.equal(r.body, "pong");
       }
     } finally {
       const waitForExit = async (timeoutMs) => {

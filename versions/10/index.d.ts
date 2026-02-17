@@ -46,6 +46,7 @@ export { ByteRange as ByteRange } from './index/internal/index.js';
 export { RangeResult as RangeResult } from './index/internal/index.js';
 export { FileStat as FileStat } from './index/internal/index.js';
 export { express$instance as express } from './index/internal/index.js';
+export { Params as Params } from './index/internal/index.js';
 export { Request as Request } from './index/internal/index.js';
 export { Response as Response } from './index/internal/index.js';
 export { Route as Route } from './index/internal/index.js';

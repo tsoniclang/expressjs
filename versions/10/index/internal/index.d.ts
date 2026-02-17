@@ -226,6 +226,19 @@ export const JsonOptions: {
 
 export type JsonOptions = JsonOptions$instance;
 
+export interface Params$instance {
+    readonly __tsonic_type_express_Params: never;
+
+}
+
+
+export const Params: {
+    new(): Params;
+};
+
+
+export type Params = Params$instance & { readonly [key: string]: string | undefined; };
+
 export interface RangeOptions$instance {
     readonly __tsonic_type_express_RangeOptions: never;
 
@@ -291,7 +304,7 @@ export interface Request$instance {
     ips: List_1<System_Internal.String>;
     method: string;
     originalUrl: string;
-    params: Dictionary_2<System_Internal.String, unknown | undefined>;
+    readonly params: Params;
     path: string;
     protocol: string;
     query: Dictionary_2<System_Internal.String, unknown | undefined>;
@@ -474,6 +487,12 @@ export interface Router$instance extends RoutingHost_1<Router> {
     readonly __tsonic_type_express_Router: never;
 
     param(name: string, callback: ParamHandler): Router;
+    use(callback: Router): Router;
+    use(callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    use(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
+    use(path: string, callback: Router): Router;
+    use(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    use(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
 }
 
 
